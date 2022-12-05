@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { lazy } from 'react';
 
 // project import
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
+import AdminDashboard from 'pages/admin/AdminDashboard';
+import CreateNewUser from 'pages/admin/CreateNewUser';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -17,7 +20,9 @@ const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
 
 // ==============================|| MAIN ROUTING ||============================== //
-
+// let data = localStorage.getItem('admin');
+// let token = JSON.parse(data);
+// console.log('%%%%%%%%%%', token);
 const MainRoutes = {
     path: '/',
     element: <MainLayout />,
@@ -54,6 +59,14 @@ const MainRoutes = {
         {
             path: 'icons/ant',
             element: <AntIcons />
+        },
+        {
+            path: 'admin/dashboard',
+            element: <AdminDashboard />
+        },
+        {
+            path: 'admin/createUser',
+            element: <CreateNewUser />
         }
     ]
 };

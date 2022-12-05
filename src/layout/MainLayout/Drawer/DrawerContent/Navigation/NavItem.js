@@ -20,7 +20,7 @@ const NavItem = ({ item, level }) => {
 
     let itemTarget = '_self';
     if (item.target) {
-        itemTarget = '_blank';
+        itemTarget = '';
     }
 
     let listItemProps = { component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url} target={itemTarget} />) };

@@ -1,7 +1,9 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
-
-// material-ui
+/* eslint-disable no-unused-vars */
+import React, { useState } from 'react';
+// eslint-disable-next-line no-unused-vars
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import {
     Button,
     Checkbox,
@@ -28,13 +30,15 @@ import AnimateButton from 'components/@extended/AnimateButton';
 
 // assets
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+import { LoaderFile } from 'pages/extra-pages/LoaderFile';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const AuthLogin = () => {
-    const [checked, setChecked] = React.useState(false);
-
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [checked, setChecked] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
@@ -47,23 +51,42 @@ const AuthLogin = () => {
         <>
             <Formik
                 initialValues={{
-                    email: 'info@codedthemes.com',
-                    password: '123456',
-                    submit: null
+                    email: '',
+                    password: ''
                 }}
                 validationSchema={Yup.object().shape({
                     email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-                    password: Yup.string().max(255).required('Password is required')
+                    password: Yup.string()
+                        .required('Password is required.')
+                        .min(8, 'Password is too short - should be 8 chars minimum.')
+                        .matches(
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+                            'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character'
+                        )
                 })}
                 onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-                    try {
-                        setStatus({ success: false });
-                        setSubmitting(false);
-                    } catch (err) {
-                        setStatus({ success: false });
-                        setErrors({ submit: err.message });
-                        setSubmitting(false);
-                    }
+                    // console.log(setErrors, setStatus, setSubmitting, 'utuytuy5tyu');
+                    var requested = {
+                        email: values.email,
+                        password: values.password
+                    };
+                    setLoading(true);
+                    await axios
+                        .post('http://103.127.29.85:3001/api/login', requested)
+                        .then((res) => {
+                            if (res?.status === 200) {
+                                toast.success(`Welcome back ${res?.data?.user?.first_name}_${res?.data?.user?.last_name}`);
+                                res?.data?.role === 'admin'
+                                    ? localStorage.setItem('admin', JSON.stringify(res?.data)) || navigate('/admin/dashboard')
+                                    : '';
+                            } else {
+                                console.log('something went wrong');
+                            }
+                        })
+                        .catch((err) => {
+                            toast.error(err.response.data.msg);
+                        });
+                    setLoading(false);
                 }}
             >
                 {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
@@ -100,6 +123,7 @@ const AuthLogin = () => {
                                         type={showPassword ? 'text' : 'password'}
                                         value={values.password}
                                         name="password"
+                                        placeholder="Enter password"
                                         onBlur={handleBlur}
                                         onChange={handleChange}
                                         endAdornment={
@@ -115,7 +139,6 @@ const AuthLogin = () => {
                                                 </IconButton>
                                             </InputAdornment>
                                         }
-                                        placeholder="Enter password"
                                     />
                                     {touched.password && errors.password && (
                                         <FormHelperText error id="standard-weight-helper-text-password-login">
@@ -139,7 +162,7 @@ const AuthLogin = () => {
                                         }
                                         label={<Typography variant="h6">Keep me sign in</Typography>}
                                     />
-                                    <Link variant="h6" component={RouterLink} to="" color="text.primary">
+                                    <Link variant="h6" href="forgotPassword" color="text.primary">
                                         Forgot Password?
                                     </Link>
                                 </Stack>
@@ -151,17 +174,21 @@ const AuthLogin = () => {
                             )}
                             <Grid item xs={12}>
                                 <AnimateButton>
-                                    <Button
-                                        disableElevation
-                                        disabled={isSubmitting}
-                                        fullWidth
-                                        size="large"
-                                        type="submit"
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        Login
-                                    </Button>
+                                    {!loading ? (
+                                        <Button
+                                            disableElevation
+                                            disabled={isSubmitting}
+                                            fullWidth
+                                            size="large"
+                                            type="submit"
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            Login
+                                        </Button>
+                                    ) : (
+                                        <LoaderFile />
+                                    )}
                                 </AnimateButton>
                             </Grid>
                             <Grid item xs={12}>
