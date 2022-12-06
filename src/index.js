@@ -16,7 +16,6 @@ import 'assets/third-party/apex-chart.css';
 import App from './App';
 import { store } from 'store';
 import reportWebVitals from './reportWebVitals';
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />;
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
