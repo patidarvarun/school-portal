@@ -84,7 +84,6 @@ const AuthLogin = () => {
                             }
                         })
                         .catch((err) => {
-                            console.log('^^^^^^^^^^^^', err);
                             if (err?.message === 'Network Error') {
                                 toast.error(err.message);
                             } else {
