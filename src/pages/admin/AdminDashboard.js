@@ -327,7 +327,7 @@ export default function StickyHeadTable() {
                 </div>
                 <Table sx={{ minWidth: 150 }} aria-label="simple table">
                     <TableHead>
-                        <TableRow>
+                        <TableRow>  
                             <TableCell style={{ background: '#efefef', color: 'black' }}>FirstName</TableCell>
                             <TableCell style={{ background: '#efefef', color: 'black' }}>LastName</TableCell>
                             <TableCell style={{ background: '#efefef', color: 'black' }}>Image</TableCell>
