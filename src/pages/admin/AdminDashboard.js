@@ -328,15 +328,15 @@ export default function StickyHeadTable() {
                 <Table sx={{ minWidth: 150 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>FirstName</TableCell>
-                            <TableCell>LastName</TableCell>
-                            <TableCell>Image</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Description</TableCell>
-                            <TableCell>Contact</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Edit</TableCell>
-                            <TableCell>Delete</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>FirstName</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>LastName</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>Image</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>Email</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>Description</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>Contact</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>Status</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>&emsp;Edit</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -358,10 +358,27 @@ export default function StickyHeadTable() {
                                 <TableCell>{row.contact}</TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell style={{ cursor: 'pointer' }}>
-                                    <EditOutlinedIcon onClick={() => handleEdit(row)} />
+                                    <Button
+                                        onClick={() => handleEdit(row)}
+                                        variant="contained"
+                                        style={{ fontSize: 'inherit', fontWeight: ' 600' }}
+                                        size="small"
+                                    >
+                                        Edit
+                                    </Button>
+                                    {/* <EditOutlinedIcon onClick={() => handleEdit(row)} /> */}
                                 </TableCell>
                                 <TableCell style={{ cursor: 'pointer' }}>
-                                    <DeleteForeverIcon onClick={() => handleDelete(row)} />
+                                    <Button
+                                        onClick={() => handleDelete(row)}
+                                        variant="contained"
+                                        style={{ fontSize: 'inherit', fontWeight: ' 600' }}
+                                        size="small"
+                                        color="error"
+                                    >
+                                        Delete
+                                    </Button>
+                                    {/* <DeleteForeverIcon onClick={() => handleDelete(row)} /> */}
                                 </TableCell>
                             </TableRow>
                         ))}
