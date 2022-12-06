@@ -84,7 +84,12 @@ const AuthLogin = () => {
                             }
                         })
                         .catch((err) => {
-                            toast.error(err.response.data.msg);
+                            console.log('^^^^^^^^^^^^', err);
+                            if (err?.message === 'Network Error') {
+                                toast.error(err.message);
+                            } else {
+                                toast.error(err.response.data.msg);
+                            }
                         });
                     setLoading(false);
                 }}
