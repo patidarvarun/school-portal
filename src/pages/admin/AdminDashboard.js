@@ -178,7 +178,7 @@ export default function StickyHeadTable() {
                                                 toast.success('Data updated');
                                                 window.location.replace('/admin/dashboard');
                                             } else {
-                                                console.log('something went wrong');
+                                                console.log('Something went wrong');
                                             }
                                         })
                                         .catch((err) => {
