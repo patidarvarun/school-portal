@@ -15,11 +15,17 @@ import * as Yup from 'yup';
 
 export default function CreateNewUser() {
     const [loading, setLoading] = useState(false);
+    const [imagee, setImage] = useState();
+    const [imageURL, setImageURL] = useState();
     const navigate = useNavigate();
     const handleBack = () => {
         navigate('/admin/dashboard');
     };
 
+    const handlOnChangeImage = (event) => {
+        setImageURL(URL.createObjectURL(event.target.files[0]));
+        setImage(event.target.files[0]);
+    };
     return (
         <Box
             sx={{
@@ -70,18 +76,22 @@ export default function CreateNewUser() {
                             )
                     })}
                     onSubmit={async (values, { setErrors }) => {
-                        var requested = {
+                        let formData = new FormData();
+                        const data = {
                             first_name: values.first_name,
                             last_name: values.last_name,
-                            image: values.image,
+                            image: imagee,
                             email: values.email,
                             description: values.description,
                             contact: values.contact,
                             role_id: '1'
                         };
+                        for (var key in data) {
+                            formData.append(key, data[key]);
+                        }
                         setLoading(true);
                         await axios
-                            .post(`http://103.127.29.85:3001/api/createUser`, requested, {
+                            .post(`http://103.127.29.85:3001/api/createUser`, formData, {
                                 headers: authHeader()
                             })
                             .then((res) => {
@@ -148,15 +158,25 @@ export default function CreateNewUser() {
                                 <Grid item xs={6}>
                                     <Stack spacing={1}>
                                         <InputLabel htmlFor="image">Image</InputLabel>
-                                        <OutlinedInput
-                                            id="image"
-                                            type="file"
-                                            // defaultValue={editData?.image}
-                                            name="image"
-                                            onBlur={handleBlur}
-                                            onChange={handleChange}
-                                            fullWidth
-                                        />
+                                        <div
+                                            className="hoverimage"
+                                            style={{ display: 'flex', border: '1px solid #d9d9d9', borderRadius: '5px' }}
+                                        >
+                                            {imageURL === undefined ? (
+                                                ''
+                                            ) : (
+                                                <img src={imageURL} alt="imagee" style={{ width: '64px', height: '64px' }} />
+                                            )}
+                                            <input
+                                                id="image"
+                                                style={{ padding: '21px', width: '100%' }}
+                                                type="file"
+                                                name="image"
+                                                onBlur={handleBlur}
+                                                onChange={handlOnChangeImage}
+                                                fullWidth
+                                            />
+                                        </div>
                                     </Stack>
                                 </Grid>
                                 <Grid item xs={6}>

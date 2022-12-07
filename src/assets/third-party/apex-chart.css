@@ -2,3 +2,6 @@
     left: -4px !important;
     top: 2px !important;
 }
+.hoverimage:hover {
+    border: 1px solid #5ac8fa !important;
+}

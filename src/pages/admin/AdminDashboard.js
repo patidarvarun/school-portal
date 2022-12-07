@@ -155,18 +155,22 @@ export default function StickyHeadTable() {
                                     status: ''
                                 }}
                                 onSubmit={async (values, { setErrors }) => {
-                                    var requested = {
+                                    let formData = new FormData();
+                                    const data = {
                                         first_name: values.first_name === '' ? editData.first_name : values.first_name,
                                         last_name: values.last_name === '' ? editData.last_name : values.last_name,
-                                        image: imagee === undefined ? editData.image : imagee,
                                         email: values.email === '' ? editData.email : values.email,
                                         description: values.description === '' ? editData.description : values.description,
                                         contact: values.contact === '' ? editData.contact : values.contact,
-                                        status: values.status === '' ? editData.status : values.status
+                                        image: imagee === undefined ? editData.image : imagee
+                                        // status: values.status === '' ? editData.status : values.status
                                     };
+                                    for (var key in data) {
+                                        formData.append(key, data[key]);
+                                    }
                                     setLoading(true);
                                     await axios
-                                        .put(`http://103.127.29.85:3001/api/UpdateUser/${editData.id}`, requested, {
+                                        .put(`http://103.127.29.85:3001/api/UpdateUser/${editData.id}`, formData, {
                                             headers: authHeader()
                                         })
                                         .then((res) => {
@@ -218,8 +222,17 @@ export default function StickyHeadTable() {
                                             <Grid item xs={12}>
                                                 <Stack spacing={1}>
                                                     <InputLabel htmlFor="image">Image</InputLabel>
-                                                    <div style={{ display: 'flex' }}>
-                                                        {imageURL === undefined ? (
+                                                    <div
+                                                        className="hoverimage"
+                                                        style={{ display: 'flex', border: '1px solid #d9d9d9', borderRadius: '5px' }}
+                                                    >
+                                                        {editData.image === 'undefined' ? (
+                                                            <img
+                                                                src={imageURL === undefined ? '/default.png' : imageURL}
+                                                                alt="imagee"
+                                                                style={{ width: '64px', height: '64px' }}
+                                                            />
+                                                        ) : imageURL === undefined ? (
                                                             <img
                                                                 src={`http://103.127.29.85:3001/${editData.image}`}
                                                                 alt="imagee"
@@ -228,8 +241,9 @@ export default function StickyHeadTable() {
                                                         ) : (
                                                             <img src={imageURL} alt="imagee" style={{ width: '64px', height: '64px' }} />
                                                         )}
-                                                        <OutlinedInput
+                                                        <input
                                                             id="image"
+                                                            style={{ padding: '21px', width: '100%' }}
                                                             type="file"
                                                             name="image"
                                                             onBlur={handleBlur}
@@ -347,11 +361,15 @@ export default function StickyHeadTable() {
                                 </TableCell>
                                 <TableCell>{row.last_name}</TableCell>
                                 <TableCell>
-                                    <img
-                                        src={`http://103.127.29.85:3001/${row.image}`}
-                                        alt="imagee"
-                                        style={{ width: '64px', height: '64px' }}
-                                    />
+                                    {row.image === 'undefined' ? (
+                                        <img src="/default.png" alt="imagee" style={{ width: '64px', height: '64px' }} />
+                                    ) : (
+                                        <img
+                                            src={`http://103.127.29.85:3001/${row.image}`}
+                                            alt="imagee"
+                                            style={{ width: '64px', height: '64px' }}
+                                        />
+                                    )}
                                 </TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.description}</TableCell>
