@@ -13,6 +13,9 @@ import { activeItem } from 'store/reducers/menu';
 // ==============================|| NAVIGATION - LIST ITEM ||============================== //
 
 const NavItem = ({ item, level }) => {
+    console.log('@@@@@@@@@@@@@@', item);
+    let data = localStorage.getItem('admin');
+    let userr = JSON.parse(data);
     const theme = useTheme();
     const dispatch = useDispatch();
     const menu = useSelector((state) => state.menu);
@@ -22,7 +25,6 @@ const NavItem = ({ item, level }) => {
     if (item.target) {
         itemTarget = '';
     }
-
     let listItemProps = { component: forwardRef((props, ref) => <Link ref={ref} {...props} to={item.url} target={itemTarget} />) };
     if (item?.external) {
         listItemProps = { component: 'a', href: item.url, target: itemTarget };
@@ -51,7 +53,6 @@ const NavItem = ({ item, level }) => {
 
     const textColor = 'text.primary';
     const iconSelectedColor = 'primary.main';
-
     return (
         <ListItemButton
             {...listItemProps}
@@ -116,15 +117,26 @@ const NavItem = ({ item, level }) => {
                     {itemIcon}
                 </ListItemIcon>
             )}
-            {(drawerOpen || (!drawerOpen && level !== 1)) && (
-                <ListItemText
-                    primary={
-                        <Typography variant="h6" sx={{ color: isSelected ? iconSelectedColor : textColor }}>
-                            {item.title}
-                        </Typography>
-                    }
-                />
-            )}
+            {(drawerOpen || (!drawerOpen && level !== 1)) &&
+                (!userr?.token ? (
+                    <ListItemText
+                        primary={
+                            <Typography variant="h6" sx={{ color: isSelected ? iconSelectedColor : textColor }}>
+                                {item.title}
+                            </Typography>
+                        }
+                    />
+                ) : (
+                    item.map((data) => (
+                        <ListItemText
+                            primary={
+                                <Typography variant="h6" sx={{ color: isSelected ? iconSelectedColor : textColor }}>
+                                    {data.title}
+                                </Typography>
+                            }
+                        />
+                    ))
+                ))}
             {(drawerOpen || (!drawerOpen && level !== 1)) && item.chip && (
                 <Chip
                     color={item.chip.color}

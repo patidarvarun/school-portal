@@ -6,10 +6,13 @@ import { Box, List, Typography } from '@mui/material';
 
 // project import
 import NavItem from './NavItem';
+import pages2 from '../../../../../menu-items/pages2';
 
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 
 const NavGroup = ({ item }) => {
+    let data = localStorage.getItem('admin');
+    let userr = JSON.parse(data);
     const menu = useSelector((state) => state.menu);
     const { drawerOpen } = menu;
 
@@ -22,7 +25,7 @@ const NavGroup = ({ item }) => {
                     </Typography>
                 );
             case 'item':
-                return <NavItem key={menuItem.id} item={menuItem} level={1} />;
+                return <>{!userr?.token ? <NavItem key={menuItem.id} item={menuItem} level={1} /> : <NavItem item={pages2} />}</>;
             default:
                 return (
                     <Typography key={menuItem.id} variant="h6" color="error" align="center">
