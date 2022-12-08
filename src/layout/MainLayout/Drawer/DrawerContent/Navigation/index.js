@@ -8,7 +8,18 @@ import menuItem from 'menu-items';
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
 const Navigation = () => {
-    const navGroups = menuItem.items.map((item) => {
+    const menuItemAfterLogin = menuItem.items.filter((item) => {
+        return item.title === '';
+    });
+    const menuItemBeforeLogin = menuItem.items.filter((item) => {
+        return item.title !== '';
+    });
+
+    let data = localStorage.getItem('admin');
+    let user = JSON.parse(data);
+    const finalData = user?.token ? menuItemAfterLogin : menuItemBeforeLogin;
+
+    const navGroups = finalData.map((item) => {
         switch (item.type) {
             case 'group':
                 return <NavGroup key={item.id} item={item} />;

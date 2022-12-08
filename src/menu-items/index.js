@@ -8,7 +8,7 @@ import pages2 from './pages2';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-    items: [dashboard, pages, utilities, support, pages2]
+    items: [dashboard, pages, pages2, utilities, support]
 };
 
 export default menuItems;

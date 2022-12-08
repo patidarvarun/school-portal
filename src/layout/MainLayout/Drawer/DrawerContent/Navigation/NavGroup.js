@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
@@ -6,7 +7,6 @@ import { Box, List, Typography } from '@mui/material';
 
 // project import
 import NavItem from './NavItem';
-import pages2 from '../../../../../menu-items/pages2';
 
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 
@@ -25,7 +25,7 @@ const NavGroup = ({ item }) => {
                     </Typography>
                 );
             case 'item':
-                return <>{!userr?.token ? <NavItem key={menuItem.id} item={menuItem} level={1} /> : <NavItem item={pages2} />}</>;
+                return <NavItem key={menuItem.id} item={menuItem} level={1} />;
             default:
                 return (
                     <Typography key={menuItem.id} variant="h6" color="error" align="center">

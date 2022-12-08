@@ -1,31 +1,37 @@
 // assets
-import { LoginOutlined, ProfileOutlined } from '@ant-design/icons';
+import { DashboardOutlined } from '@ant-design/icons';
+import { FileDoneOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
-    LoginOutlined,
-    ProfileOutlined
+    DashboardOutlined,
+    FileDoneOutlined
 };
 
-// ==============================|| MENU ITEMS - EXTRA PAGES2 ||============================== //
+// ==============================|| MENU ITEMS AFTER LOGIN - DASHBOARD ||============================== //
 
-const pages2 = [
-    {
-        id: 'page1',
-        title: 'Pages',
-        type: 'item',
-        url: '/page',
-        // icon: icons.LoginOutlined,
-        target: true
-    },
-    {
-        id: 'home',
-        title: 'Home',
-        type: 'home',
-        url: '/home',
-        // icon: icons.LoginOutlined,
-        target: true
-    }
-];
+const pages2 = {
+    id: 'group-dashboard',
+    title: '',
+    type: 'group',
+    children: [
+        {
+            id: 'home',
+            title: 'Home',
+            type: 'item',
+            url: 'admin/dashboard',
+            icon: icons.DashboardOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'pages',
+            title: 'Pages',
+            type: 'item',
+            url: 'admin/pages',
+            icon: icons.FileDoneOutlined,
+            breadcrumbs: false
+        }
+    ]
+};
 
 export default pages2;
