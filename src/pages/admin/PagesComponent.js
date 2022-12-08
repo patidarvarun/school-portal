@@ -9,26 +9,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import authHeader from '../authentication/auth-forms/AuthHeader';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
 import { toast } from 'react-toastify';
-import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { Formik } from 'formik';
-import AnimateButton from 'components/@extended/AnimateButton';
-import { Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 const style = {
     position: 'absolute',
@@ -45,22 +29,9 @@ export default function StickyHeadTable() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [pageData, setPageData] = useState();
-    const [open, setOpen] = React.useState(false);
-    const [imagee, setImage] = useState();
-    const [imageURL, setImageURL] = useState();
-    const [scroll, setScroll] = React.useState('paper');
-    const [editData, setEditData] = useState();
+    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const html = 'aaaaa';
-    function handleClickOpen(scrollType) {
-        setOpen(true);
-        setScroll(scrollType);
-    }
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const descriptionElementRef = React.useRef(null);
     useEffect(() => {
@@ -75,34 +46,25 @@ export default function StickyHeadTable() {
         setPage(newPage);
     };
 
-    // const handlOnChangeImage = (event) => {
-    //     setImageURL(URL.createObjectURL(event.target.files[0]));
-    //     setImage(event.target.files[0]);
-    // };
-    // function handleEdit(data) {
-    //     handleClickOpen('paper');
-    //     setEditData(data);
-    // }
-    // async function handleDelete(data) {
-    //     setLoading(true);
-    //     await axios
-    //         .delete(`http://103.127.29.85:3001/api/DeleteUser/${data.id}`, {
-    //             headers: authHeader()
-    //         })
-    //         .then((res) => {
-    //             if (res?.status === 200) {
-    //                 toast.success('User Deleted');
-    //                 getpageData();
-    //             } else {
-    //                 console.log('something went wrong');
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             toast.error(err.response.data.Message);
-    //         });
-    //     setLoading(false);
-    // }
+    async function handleDelete(data) {
+        setLoading(true);
+        await axios
+            .delete(`http://103.127.29.85:3001/api/DeletePage/${data.id}`)
+            .then((res) => {
+                if (res?.status === 200) {
+                    toast.success('User Deleted');
+                    getPageContent();
+                } else {
+                    console.log('something went wrong');
+                }
+            })
+            .catch((err) => {
+                toast.error('Something went wrong');
+            });
+        setLoading(false);
+    }
     async function getPageContent() {
+        localStorage.removeItem('content');
         await axios
             .get(`http://103.127.29.85:3001/api/getContent`)
             .then((res) => {
@@ -117,7 +79,10 @@ export default function StickyHeadTable() {
     }, []);
 
     const handleView = (data) => {
-        console.log('@@@@@@@@@@@@@@@', data);
+        localStorage.removeItem('content');
+        localStorage.setItem('content', data.html);
+        var win = window.open('/viewPageContent', '_blank');
+        win.focus();
     };
 
     const handlePageChange = () => {
@@ -130,7 +95,6 @@ export default function StickyHeadTable() {
     };
     return (
         <>
-            {ReactHtmlParser(html)}
             <TableContainer component={Paper}>
                 <br />
                 <div style={{ textAlign: 'right', marginRight: '17px', marginBottom: '10px' }}>
@@ -183,7 +147,7 @@ export default function StickyHeadTable() {
                                 </TableCell>
                                 <TableCell style={{ cursor: 'pointer' }}>
                                     <Button
-                                        // onClick={() => handleDelete(row)}
+                                        onClick={() => handleDelete(row)}
                                         variant="contained"
                                         style={{ fontSize: 'inherit', fontWeight: ' 600' }}
                                         size="small"

@@ -20,6 +20,7 @@ const Typography = Loadable(lazy(() => import('pages/components-overview/Typogra
 const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
+import ViewContent from '../pages/admin/ViewContent';
 
 // ==============================|| MAIN ROUTING ||============================== //
 // let data = localStorage.getItem('admin');
@@ -77,6 +78,10 @@ const MainRoutes = {
         {
             path: 'admin/createNewPage',
             element: <CreatePages />
+        },
+        {
+            path: '/viewPageContent',
+            element: <ViewContent />
         }
     ]
 };

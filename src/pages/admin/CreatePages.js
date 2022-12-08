@@ -2,21 +2,24 @@
 import React, { useRef, useState } from 'react';
 import EmailEditor from 'react-email-editor';
 import Button from '@mui/material/Button';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, InputLabel, OutlinedInput, Stack, FormHelperText, Select } from '@mui/material';
 import { LoaderFile } from 'pages/extra-pages/LoaderFile';
 import authHeader from 'pages/authentication/auth-forms/AuthHeader';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom';
 
 const CreatePages = (props) => {
     const emailEditorRef = useRef(null);
     const [statuss, setStatuss] = useState('');
     const [errorStatus, setErrorStatus] = useState('');
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange1 = (event) => {
         if (event.target.value === '') {
@@ -33,7 +36,9 @@ const CreatePages = (props) => {
             setErrorStatus('');
         }
     };
-
+    const handleBack = () => {
+        navigate('/admin/pages');
+    };
     const onLoad = () => {
         // editor instance is created
         // you can load your template here;
@@ -101,7 +106,7 @@ const CreatePages = (props) => {
                     {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
                         <form noValidate onSubmit={handleSubmit}>
                             <Grid container spacing={3.5}>
-                                <Grid item xs={3.4}>
+                                <Grid item xs={3.2}>
                                     <Stack spacing={1}>
                                         <InputLabel htmlFor="name">Name*</InputLabel>
                                         <OutlinedInput
@@ -121,7 +126,7 @@ const CreatePages = (props) => {
                                         )}
                                     </Stack>
                                 </Grid>
-                                <Grid item xs={3.4}>
+                                <Grid item xs={3.2}>
                                     <Stack spacing={1}>
                                         <InputLabel htmlFor="status">Status*</InputLabel>
                                         <Select
@@ -143,7 +148,7 @@ const CreatePages = (props) => {
                                         </FormHelperText>
                                     </Stack>
                                 </Grid>
-                                <Grid item xs={3.4}>
+                                <Grid item xs={3.2}>
                                     <Stack spacing={1}>
                                         <InputLabel htmlFor="slug">Slug*</InputLabel>
                                         <OutlinedInput
@@ -163,7 +168,7 @@ const CreatePages = (props) => {
                                         )}
                                     </Stack>
                                 </Grid>
-                                <Grid item xs={1.6}>
+                                <Grid item xs={1.3}>
                                     <Stack spacing={1}>
                                         <InputLabel htmlFor="">.</InputLabel>
                                         {!loading ? (
@@ -176,13 +181,28 @@ const CreatePages = (props) => {
                                                 type="submit"
                                                 color="primary"
                                                 onClick={exportHtml}
-                                                endIcon={<ArrowCircleRightIcon />}
+                                                endIcon={<CheckCircleOutlineIcon />}
                                             >
-                                                Export
+                                                Save
                                             </Button>
                                         ) : (
                                             <LoaderFile />
                                         )}
+                                    </Stack>
+                                </Grid>
+                                <Grid item xs={1}>
+                                    <Stack spacing={1}>
+                                        <InputLabel htmlFor="">.</InputLabel>
+                                        <Button
+                                            variant="outlined"
+                                            fullWidth
+                                            size="large"
+                                            color="primary"
+                                            onClick={handleBack}
+                                            startIcon={<ArrowBackIosIcon />}
+                                        >
+                                            Back
+                                        </Button>
                                     </Stack>
                                 </Grid>
                             </Grid>
