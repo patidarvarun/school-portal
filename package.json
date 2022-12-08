@@ -74,7 +74,7 @@
             "@babel/preset-react"
         ]
     },
-    "browserslist": {
+    "browserslist": {  
         "production": [
             ">0.2%",
             "not dead",
