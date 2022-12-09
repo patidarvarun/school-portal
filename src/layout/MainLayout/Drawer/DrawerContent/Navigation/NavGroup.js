@@ -11,7 +11,7 @@ import NavItem from './NavItem';
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 
 const NavGroup = ({ item }) => {
-    let data = localStorage.getItem('admin');
+    let data = localStorage.getItem('token');
     let userr = JSON.parse(data);
     const menu = useSelector((state) => state.menu);
     const { drawerOpen } = menu;

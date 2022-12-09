@@ -9,55 +9,44 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import authHeader from '../authentication/auth-forms/AuthHeader';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Typography from '@mui/material/Typography';
 import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import AnimateButton from 'components/@extended/AnimateButton';
-import { Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Stack } from '@mui/material';
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 600,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4
-};
+import { Grid, IconButton, InputLabel, OutlinedInput, Stack, MenuItem, Popover } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 export default function StickyHeadTable() {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [userData, setUserData] = useState();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [openn, setOpenn] = useState(false);
     const [imagee, setImage] = useState();
     const [imageURL, setImageURL] = useState();
-    const [scroll, setScroll] = React.useState('paper');
+    const [scroll, setScroll] = useState('paper');
     const [editData, setEditData] = useState();
+    const [EditDelete, setEditDelete] = useState();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     function handleClickOpen(scrollType) {
-        setOpen(true);
+        setOpenn(true);
         setScroll(scrollType);
     }
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenn(false);
     };
 
     const descriptionElementRef = React.useRef(null);
@@ -77,14 +66,22 @@ export default function StickyHeadTable() {
         setImageURL(URL.createObjectURL(event.target.files[0]));
         setImage(event.target.files[0]);
     };
-    function handleEdit(data) {
+    const handleEdit = () => {
         handleClickOpen('paper');
-        setEditData(data);
-    }
-    async function handleDelete(data) {
+        setEditData(EditDelete);
+    };
+    const handleOpenMenu = (event, data) => {
+        setOpen(event.currentTarget);
+        setEditDelete(data);
+    };
+    const handleCloseMenu = () => {
+        setOpen(null);
+    };
+    const handleDelete = async () => {
         setLoading(true);
+        setOpen(false);
         await axios
-            .delete(`http://103.127.29.85:3001/api/DeleteUser/${data.id}`, {
+            .delete(`http://103.127.29.85:3001/api/DeleteUser/${EditDelete.id}`, {
                 headers: authHeader()
             })
             .then((res) => {
@@ -99,7 +96,7 @@ export default function StickyHeadTable() {
                 toast.error(err.response.data.Message);
             });
         setLoading(false);
-    }
+    };
     async function getUserData() {
         await axios
             .get(`http://103.127.29.85:3001/api/user`, {
@@ -136,7 +133,7 @@ export default function StickyHeadTable() {
                 <hr />
                 <div>
                     <Dialog
-                        open={open}
+                        open={openn}
                         onClose={handleClose}
                         scroll={scroll}
                         aria-labelledby="scroll-dialog-title"
@@ -226,7 +223,7 @@ export default function StickyHeadTable() {
                                                         className="hoverimage"
                                                         style={{ display: 'flex', border: '1px solid #d9d9d9', borderRadius: '5px' }}
                                                     >
-                                                        {editData.image === 'undefined' ? (
+                                                        {editData?.image === 'undefined' ? (
                                                             <img
                                                                 src={imageURL === undefined ? '/default.png' : imageURL}
                                                                 alt="imagee"
@@ -234,7 +231,7 @@ export default function StickyHeadTable() {
                                                             />
                                                         ) : imageURL === undefined ? (
                                                             <img
-                                                                src={`http://103.127.29.85:3001/${editData.image}`}
+                                                                src={`http://103.127.29.85:3001/${editData?.image}`}
                                                                 alt="imagee"
                                                                 style={{ width: '64px', height: '64px' }}
                                                             />
@@ -349,8 +346,7 @@ export default function StickyHeadTable() {
                             <TableCell style={{ background: '#efefef', color: 'black' }}>Description</TableCell>
                             <TableCell style={{ background: '#efefef', color: 'black' }}>Contact</TableCell>
                             <TableCell style={{ background: '#efefef', color: 'black' }}>Status</TableCell>
-                            <TableCell style={{ background: '#efefef', color: 'black' }}>&emsp;Edit</TableCell>
-                            <TableCell style={{ background: '#efefef', color: 'black' }}>Delete</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>&emsp;Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -375,33 +371,42 @@ export default function StickyHeadTable() {
                                 <TableCell>{row.description}</TableCell>
                                 <TableCell>{row.contact}</TableCell>
                                 <TableCell>{row.status}</TableCell>
-                                <TableCell style={{ cursor: 'pointer' }}>
-                                    <Button
-                                        onClick={() => handleEdit(row)}
-                                        variant="contained"
-                                        style={{ fontSize: 'inherit', fontWeight: ' 600' }}
-                                        size="small"
-                                    >
-                                        Edit
-                                    </Button>
-                                    {/* <EditOutlinedIcon onClick={() => handleEdit(row)} /> */}
-                                </TableCell>
-                                <TableCell style={{ cursor: 'pointer' }}>
-                                    <Button
-                                        onClick={() => handleDelete(row)}
-                                        variant="contained"
-                                        style={{ fontSize: 'inherit', fontWeight: ' 600' }}
-                                        size="small"
-                                        color="error"
-                                    >
-                                        Delete
-                                    </Button>
-                                    {/* <DeleteForeverIcon onClick={() => handleDelete(row)} /> */}
+                                <TableCell>
+                                    <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(e, row)}>
+                                        <MoreVertIcon />
+                                    </IconButton>
                                 </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
+                <Popover
+                    open={Boolean(open)}
+                    anchorEl={open}
+                    onClose={handleCloseMenu}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+                    transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                    PaperProps={{
+                        sx: {
+                            p: 1,
+                            width: 140,
+                            '& .MuiMenuItem-root': {
+                                px: 1,
+                                typography: 'body2',
+                                borderRadius: 0.75
+                            }
+                        }
+                    }}
+                >
+                    <MenuItem onClick={handleEdit}>
+                        <EditIcon sx={{ mr: 2 }} />
+                        Edit
+                    </MenuItem>
+                    <MenuItem sx={{ color: 'error.main' }} onClick={handleDelete}>
+                        <DeleteOutlineIcon sx={{ mr: 2 }} />
+                        Delete
+                    </MenuItem>
+                </Popover>
                 <TablePagination
                     rowsPerPageOptions={[10, 25, 100]}
                     component="div"

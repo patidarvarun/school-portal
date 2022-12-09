@@ -168,7 +168,7 @@ const CreatePages = (props) => {
                                         )}
                                     </Stack>
                                 </Grid>
-                                <Grid item xs={1.3}>
+                                <Grid item xs={1.1}>
                                     <Stack spacing={1}>
                                         <InputLabel htmlFor="">.</InputLabel>
                                         {!loading ? (
@@ -190,7 +190,7 @@ const CreatePages = (props) => {
                                         )}
                                     </Stack>
                                 </Grid>
-                                <Grid item xs={1}>
+                                <Grid item xs={1.1}>
                                     <Stack spacing={1}>
                                         <InputLabel htmlFor="">.</InputLabel>
                                         <Button

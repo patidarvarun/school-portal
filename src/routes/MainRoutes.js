@@ -21,9 +21,10 @@ const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
 import ViewContent from '../pages/admin/ViewContent';
+import UserDashboard from '../pages/user/UserDashboard';
 
 // ==============================|| MAIN ROUTING ||============================== //
-// let data = localStorage.getItem('admin');
+// let data = localStorage.getItem('token');
 // let token = JSON.parse(data);
 // console.log('%%%%%%%%%%', token);
 const MainRoutes = {
@@ -82,6 +83,10 @@ const MainRoutes = {
         {
             path: '/viewPageContent',
             element: <ViewContent />
+        },
+        {
+            path: '/UserDashboard',
+            element: <UserDashboard />
         }
     ]
 };

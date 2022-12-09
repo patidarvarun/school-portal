@@ -15,7 +15,7 @@ const Navigation = () => {
         return item.title !== '';
     });
 
-    let data = localStorage.getItem('admin');
+    let data = localStorage.getItem('token');
     let user = JSON.parse(data);
     const finalData = user?.token ? menuItemAfterLogin : menuItemBeforeLogin;
 

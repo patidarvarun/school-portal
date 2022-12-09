@@ -77,8 +77,8 @@ const AuthLogin = () => {
                             if (res?.status === 200) {
                                 toast.success(`Welcome back ${res?.data?.user?.first_name}_${res?.data?.user?.last_name}`);
                                 res?.data?.role === 'admin'
-                                    ? localStorage.setItem('admin', JSON.stringify(res?.data)) || navigate('/admin/dashboard')
-                                    : '';
+                                    ? localStorage.setItem('token', JSON.stringify(res?.data)) || navigate('/admin/dashboard')
+                                    : localStorage.setItem('token', JSON.stringify(res?.data)) || navigate('/userDashboard');
                             } else {
                                 console.log('something went wrong');
                             }

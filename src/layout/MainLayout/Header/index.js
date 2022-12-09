@@ -14,6 +14,9 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
 
 const Header = ({ open, handleDrawerToggle }) => {
+    let data = localStorage.getItem('token');
+    let token = JSON.parse(data);
+
     const theme = useTheme();
     const matchDownMD = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -23,16 +26,22 @@ const Header = ({ open, handleDrawerToggle }) => {
     // common header
     const mainHeader = (
         <Toolbar>
-            <IconButton
-                disableRipple
-                aria-label="open drawer"
-                onClick={handleDrawerToggle}
-                edge="start"
-                color="secondary"
-                sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
-            >
-                {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            </IconButton>
+            {token?.role === 'user' ? (
+                ''
+            ) : (
+                <>
+                    <IconButton
+                        disableRipple
+                        aria-label="open drawer"
+                        onClick={handleDrawerToggle}
+                        edge="start"
+                        color="secondary"
+                        sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
+                    >
+                        {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+                    </IconButton>
+                </>
+            )}
             <HeaderContent />
         </Toolbar>
     );
