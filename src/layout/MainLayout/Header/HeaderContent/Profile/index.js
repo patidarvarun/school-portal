@@ -406,7 +406,7 @@ const Profile = () => {
                                 onClick={loginPage}
                             >
                                 <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
-                                    <Avatar alt="Varrrr" src={avatar1} sx={{ width: 32, height: 32 }} />
+                                    <Avatar alt="Imagee" src="" sx={{ width: 32, height: 32 }} />
                                     <Typography variant="subtitle1">
                                         {/* {token?.user?.first_name}&nbsp;{token?.user?.last_name} */}
                                     </Typography>

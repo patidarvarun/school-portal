@@ -15,7 +15,6 @@ const NavGroup = ({ item }) => {
     let userr = JSON.parse(data);
     const menu = useSelector((state) => state.menu);
     const { drawerOpen } = menu;
-
     const navCollapse = item.children?.map((menuItem) => {
         switch (menuItem.type) {
             case 'collapse':
@@ -25,7 +24,13 @@ const NavGroup = ({ item }) => {
                     </Typography>
                 );
             case 'item':
-                return <NavItem key={menuItem.id} item={menuItem} level={1} />;
+                return userr && userr?.role === 'user' ? (
+                    ''
+                ) : userr?.role === 'admin' ? (
+                    <NavItem key={menuItem.id} item={menuItem} level={1} />
+                ) : (
+                    <NavItem key={menuItem.id} item={menuItem} level={1} />
+                );
             default:
                 return (
                     <Typography key={menuItem.id} variant="h6" color="error" align="center">

@@ -157,30 +157,6 @@ export default function CreateNewUser() {
                                 </Grid>
                                 <Grid item xs={6}>
                                     <Stack spacing={1}>
-                                        <InputLabel htmlFor="image">Image</InputLabel>
-                                        <div
-                                            className="hoverimage"
-                                            style={{ display: 'flex', border: '1px solid #d9d9d9', borderRadius: '5px' }}
-                                        >
-                                            {imageURL === undefined ? (
-                                                ''
-                                            ) : (
-                                                <img src={imageURL} alt="imagee" style={{ width: '64px', height: '64px' }} />
-                                            )}
-                                            <input
-                                                id="image"
-                                                style={{ padding: '21px', width: '100%' }}
-                                                type="file"
-                                                name="image"
-                                                onBlur={handleBlur}
-                                                onChange={handlOnChangeImage}
-                                                fullWidth
-                                            />
-                                        </div>
-                                    </Stack>
-                                </Grid>
-                                <Grid item xs={6}>
-                                    <Stack spacing={1}>
                                         <InputLabel htmlFor="email-login">Email Address*</InputLabel>
                                         <OutlinedInput
                                             id="email-login"
@@ -242,7 +218,30 @@ export default function CreateNewUser() {
                                         )}
                                     </Stack>
                                 </Grid>
-
+                                <Grid item xs={6}>
+                                    <Stack spacing={1}>
+                                        <InputLabel htmlFor="image">Image</InputLabel>
+                                        <div
+                                            className="hoverimage"
+                                            style={{ display: 'flex', border: '1px solid #d9d9d9', borderRadius: '5px' }}
+                                        >
+                                            {imageURL === undefined ? (
+                                                ''
+                                            ) : (
+                                                <img src={imageURL} alt="imagee" style={{ width: '64px', height: '64px' }} />
+                                            )}
+                                            <input
+                                                id="image"
+                                                style={{ padding: '21px', width: '100%' }}
+                                                type="file"
+                                                name="image"
+                                                onBlur={handleBlur}
+                                                onChange={handlOnChangeImage}
+                                                fullWidth
+                                            />
+                                        </div>
+                                    </Stack>
+                                </Grid>
                                 <Grid item xs={12}>
                                     <AnimateButton>
                                         {!loading ? (

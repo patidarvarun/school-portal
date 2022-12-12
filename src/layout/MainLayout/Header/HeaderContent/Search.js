@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, FormControl } from '@mui/material';
 import axios from 'axios';
 import authHeader from 'pages/authentication/auth-forms/AuthHeader';
+import { toast } from 'react-toastify';
 
 const Search = () => {
     const [userData, setUserData] = useState();
@@ -21,7 +22,7 @@ const Search = () => {
             });
     }
     useEffect(() => {
-        getUserData();
+        token?.role === 'user' ? getUserData() : token?.role === 'admin' ? '' : '';
     }, []);
     return (
         <Box sx={{ width: '100%', ml: { xs: 0, md: 1 } }}>
