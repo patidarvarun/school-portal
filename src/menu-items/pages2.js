@@ -1,11 +1,12 @@
 // assets
 import { DashboardOutlined } from '@ant-design/icons';
-import { FileDoneOutlined } from '@ant-design/icons';
+import { FileDoneOutlined, UnorderedListOutlined } from '@ant-design/icons';
 
 // icons
 const icons = {
     DashboardOutlined,
-    FileDoneOutlined
+    FileDoneOutlined,
+    UnorderedListOutlined
 };
 
 // ==============================|| MENU ITEMS AFTER LOGIN - DASHBOARD ||============================== //
@@ -17,10 +18,18 @@ const pages2 = {
     children: [
         {
             id: 'home',
-            title: 'Home',
+            title: 'Dashboard',
             type: 'item',
             url: 'admin/dashboard',
             icon: icons.DashboardOutlined,
+            breadcrumbs: false
+        },
+        {
+            id: 'user',
+            title: 'User List',
+            type: 'item',
+            url: 'admin/userList',
+            icon: icons.UnorderedListOutlined,
             breadcrumbs: false
         },
         {

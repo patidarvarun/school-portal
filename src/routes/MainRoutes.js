@@ -8,6 +8,7 @@ import AdminDashboard from 'pages/admin/AdminDashboard';
 import CreateNewUser from 'pages/admin/CreateNewUser';
 import PagesComponent from 'pages/admin/PagesComponent';
 import CreatePages from 'pages/admin/CreatePages';
+import EditUser from 'pages/admin/EditUser';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -22,6 +23,7 @@ const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
 import ViewContent from '../pages/admin/ViewContent';
 import UserDashboard from '../pages/user/UserDashboard';
+import Dashboard from '../pages/admin/Dashboard';
 
 // ==============================|| MAIN ROUTING ||============================== //
 // let data = localStorage.getItem('token');
@@ -65,12 +67,20 @@ const MainRoutes = {
             element: <AntIcons />
         },
         {
-            path: 'admin/dashboard',
+            path: 'admin/userList',
             element: <AdminDashboard />
+        },
+        {
+            path: 'admin/dashboard',
+            element: <Dashboard />
         },
         {
             path: 'admin/createUser',
             element: <CreateNewUser />
+        },
+        {
+            path: 'admin/editUser',
+            element: <EditUser />
         },
         {
             path: 'admin/pages',

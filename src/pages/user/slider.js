@@ -7,7 +7,7 @@ const Example = ({ slider }) => {
 
     return (
         <div>
-            <SimpleImageSlider width="100%" height="400px" images={images} showBullets={true} showNavs={true} />;
+            <SimpleImageSlider width="100%" height="400px" images={images} showBullets={true} showNavs={true} />
         </div>
     );
 };

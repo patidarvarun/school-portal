@@ -19,7 +19,10 @@ const Item = styled(Paper)(({ theme }) => ({
 
 function UserDashboard() {
     const [userData, setUserData] = useState();
-
+    const cssfont = {
+        color: 'black',
+        fontSize: '26px'
+    };
     async function getUserData() {
         await axios
             .get(`http://103.127.29.85:3001/api/getDashboardContent`, {
@@ -47,10 +50,35 @@ function UserDashboard() {
                         </Grid>
 
                         <Grid item xs={12}>
-                            <Item>xs=4</Item>
+                            <Item>
+                                <div style={{ textAlign: 'left' }}>
+                                    <p style={cssfont}>{userData?.staticContent}</p>
+                                    <p style={cssfont}>{userData?.staticContent}</p>
+                                    <p style={cssfont}>{userData?.staticContent}</p>
+                                </div>
+                            </Item>
                         </Grid>
                         <Grid item xs={12}>
-                            <Item>xs=8</Item>
+                            <Item>
+                                <div>
+                                    <h3 style={{ textAlign: 'left' }}>Footer</h3>
+                                </div>
+
+                                <div style={{ justifyContent: 'flex-end', display: 'flex', gap: '40px' }}>
+                                    <div>
+                                        <img src="/instagram.png" style={{ width: '30px' }} alt="imgg"></img>
+                                    </div>
+                                    <div>
+                                        <img src="/fb.png" style={{ width: '30px' }} alt="imgg"></img>
+                                    </div>
+                                    <div>
+                                        <img src="/twitterr.png" style={{ width: '30px' }} alt="imgg"></img>
+                                    </div>
+                                    <div>
+                                        <img src="/mail2.png" style={{ width: '30px' }} alt="imgg"></img>
+                                    </div>
+                                </div>
+                            </Item>
                         </Grid>
                     </Grid>
                 </Box>
