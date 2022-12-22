@@ -80,24 +80,28 @@ export default function StickyHeadTable() {
     const handleDelete = async () => {
         handleOpen();
     };
+
     const handleDeletee = async () => {
         setLoading(true);
         setOpen(false);
-        await axios
-            .delete(`http://103.127.29.85:3001/api/DeleteUser/${EditDelete.id}`, {
-                headers: authHeader()
-            })
-            .then((res) => {
-                if (res?.status === 200) {
-                    toast.success('User Deleted');
-                    getUserData();
-                } else {
-                    console.log('something went wrong');
-                }
-            })
-            .catch((err) => {
-                toast.error(err.response.data.Message);
-            });
+        EditDelete?.name === 'admin'
+            ? toast.error('Admin can not deleted!!')
+            : await axios
+                  .delete(`http://103.127.29.85:3001/api/DeleteUser/${EditDelete.id}`, {
+                      headers: authHeader()
+                  })
+                  .then((res) => {
+                      if (res?.status === 200) {
+                          toast.success('User Deleted');
+                          getUserData();
+                      } else {
+                          console.log('something went wrong');
+                      }
+                  })
+                  .catch((err) => {
+                      toast.error(err.response.data.Message);
+                  });
+
         setLoading(false);
         setOpenn(false);
     };
@@ -143,6 +147,7 @@ export default function StickyHeadTable() {
                             <TableCell style={{ background: '#efefef', color: 'black' }}>Image</TableCell>
                             <TableCell style={{ background: '#efefef', color: 'black' }}>Email</TableCell>
                             <TableCell style={{ background: '#efefef', color: 'black' }}>Contact</TableCell>
+                            <TableCell style={{ background: '#efefef', color: 'black' }}>Role</TableCell>
                             <TableCell style={{ background: '#efefef', color: 'black' }}>Status</TableCell>
                             <TableCell style={{ background: '#efefef', color: 'black' }}>&emsp;Action</TableCell>
                         </TableRow>
@@ -171,6 +176,13 @@ export default function StickyHeadTable() {
                                 </TableCell>
                                 <TableCell>{row.email}</TableCell>
                                 <TableCell>{row.contact}</TableCell>
+                                <TableCell>
+                                    {row.name === 'user' ? (
+                                        <span className="namecolortext">{row.name.charAt(0).toUpperCase() + row.name.slice(1)}</span>
+                                    ) : (
+                                        <span className="namecolortext1">{row.name.charAt(0).toUpperCase() + row.name.slice(1)}</span>
+                                    )}
+                                </TableCell>
                                 <TableCell>{row.status}</TableCell>
                                 <TableCell>
                                     <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(e, row)}>
@@ -184,7 +196,7 @@ export default function StickyHeadTable() {
                 <Modal open={openn} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                     <Box sx={style}>
                         <div style={{ borderBottom: '1px solid lightsteelblue' }}>
-                            <h3 className="h3-heading">Are you want to delete this user!</h3>
+                            <h3 className="h3-heading">Are you want to delete?</h3>
                         </div>
                         <div className="btn-div">
                             <button className="btnn-no" onClick={handleClose}>

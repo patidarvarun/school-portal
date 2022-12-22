@@ -53,7 +53,7 @@ body {
     font-size: 18px;
     color: cornflowerblue;
 }
-.btnn-no{
+.btnn-no {
     color: white;
     background: red;
     font-weight: 700;
@@ -63,14 +63,12 @@ body {
     border: 1px;
     border-radius: 4px;
     cursor: pointer;
-    transition: transform .7s ease-in-out;
-
+    transition: transform 0.7s ease-in-out;
 }
-.btnn-no:hover{
-    width: 56px;
-    height: 29px;
+.btnn-no:hover {
+    /* width: 56px;
+    height: 29px; */
     transform: rotate(360deg);
-
 }
 .btnn-yees {
     color: white;
@@ -82,16 +80,22 @@ body {
     border: 1px;
     border-radius: 4px;
     cursor: pointer;
-    transition: transform .7s ease-in-out;
-
+    transition: transform 0.7s ease-in-out;
 }
-.btnn-yees:hover{
-    width: 56px;
-    height: 29px;
+.btnn-yees:hover {
+    /* width: 56px;
+    height: 29px; */
     transform: rotate(360deg);
-
 }
 .btn-div {
     justify-content: flex-end;
     display: flex;
+}
+.namecolortext {
+    color: forestgreen;
+    font-weight: 600;
+}
+.namecolortext1 {
+    color: #d50909    ;
+    font-weight: 600;
 }

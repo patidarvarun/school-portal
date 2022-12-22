@@ -191,7 +191,7 @@ export default function CreateNewUser() {
                                             )}
                                         </Stack>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12}>
                                         <Stack spacing={1}>
                                             <InputLabel htmlFor="image">Image</InputLabel>
                                             <div
